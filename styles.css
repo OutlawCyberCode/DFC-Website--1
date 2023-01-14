@@ -1,0 +1,25 @@
+.main {
+    margin: auto;
+    position: absolute;
+    height: 50px;
+    width: 50px;
+    top: 50%; /* 50% from top */
+    left: 50%; /* 50% from left */
+    margin-top: -25px; /* 1/2 of height which will set the top offset */
+    margin-left: -25px; /* 1/2 if width which will set the left offset */
+}
+.main:hover {
+    background-color: #f00;
+}
+
+
+input:invalid{
+    animation: shake .3s;
+}
+
+@keyframes shake {
+    25% {transform: translateX(4px)}
+    50% {transform: translateX(-4px)}
+    75% {transform: translateX(4px)}
+
+}

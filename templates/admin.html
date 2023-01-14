@@ -1,0 +1,56 @@
+<head>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <style>
+      ::-webkit-scrollbar {
+        width: 20px;
+      }
+      
+      /* Track */
+      ::-webkit-scrollbar-track {
+        box-shadow: inset 0 0 5px grey; 
+        border-radius: 10px;
+      }
+       
+      /* Handle */
+      ::-webkit-scrollbar-thumb {
+        background: rgb(0, 170, 255); 
+        border-radius: 10px;
+      }
+      
+      /* Handle on hover */
+      ::-webkit-scrollbar-thumb:hover {
+        background: #006fa2; 
+      }
+      </style>
+  </head>
+  <nav class="navbar navbar-expand-lg navbar-light bg-light">
+      <a class="navbar-brand" href="#">DFC</a>
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav">
+          <li class="nav-item">
+            <a class="nav-link" href="/">Home</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="/currencies">Currencies</a>
+          </li>
+          {% if prank == 0 %}
+          <li class="nav-item active">
+            <a class="nav-link" href="/admin">Admin<span class="sr-only">(current)</span></a>
+          </li>
+          {% endif %}
+          <li class="nav-item">
+            <a class="nav-link" href="/logout">Logout</a>
+          </li>
+          <!-- <li class="nav-item">
+            <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">Disabled</a>
+          </li> -->
+        </ul>
+      </div>
+      <div class = "info">
+        <strong>{{ rank }}</strong><h>{{ name }}</h>
+      </div>
+    </nav>

@@ -1,0 +1,137 @@
+<head>
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+  <style>
+    ::-webkit-scrollbar {
+      width: 20px;
+    }
+    
+    /* Track */
+    ::-webkit-scrollbar-track {
+      box-shadow: inset 0 0 5px grey; 
+      border-radius: 10px;
+    }
+     
+    /* Handle */
+    ::-webkit-scrollbar-thumb {
+      background: rgb(0, 170, 255); 
+      border-radius: 10px;
+    }
+    
+    /* Handle on hover */
+    ::-webkit-scrollbar-thumb:hover {
+      background: #006fa2; 
+    }
+    </style>
+</head>
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <a class="navbar-brand" href="#">DFC</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNav">
+      <ul class="navbar-nav">
+        <li class="nav-item">
+          <a class="nav-link" href="/">Home</a>
+        </li>
+        <li class="nav-item active">
+          <a class="nav-link" href="/currencies">Currencies<span class="sr-only">(current)</span></a>
+        </li>
+        {% if prank == 0 %}
+        <li class="nav-item">
+          <a class="nav-link" href="/admin">Admin</a>
+        </li>
+        {% endif %}
+        <li class="nav-item">
+          <a class="nav-link" href="/logout">Logout</a>
+        </li>
+        <!-- <li class="nav-item">
+          <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">Disabled</a>
+        </li> -->
+      </ul>
+    </div>
+    <div class = "info">
+      <strong>{{ rank }}</strong><h>{{ name }}</h>
+    </div>
+  </nav>
+<div class="currency">
+  <h3 style = "position: absolute; left: 80px">Currencies</h3>
+  <style>#div3 {height: 245px; width:245px; overflow-y: scroll; border: 0px solid #444; padding: 5px; text-align:right;}</style>
+  <style>.scroll {height: 110px; width:300px; overflow-y: scroll; border: 0px solid #444; padding: 5px; direction:rtl; text-align:left;}</style>
+  <div id="div3" style = "position: absolute; top: 100px; ">
+  <div id="div4">
+  <form action="/currencies" method="post">
+  {% for cur in currencies %}
+    <p><input method = "post" class="btn btn-secondary" type="submit" name="cur" value="{{cur}}"/>
+    </p>
+  {% endfor %}
+  </form>
+  </div>
+  </div>
+  {% if prank < 2 %}
+  <form action="/currencies" method="post" style = "position: relative; top: 300px; left: 5px">
+    <button action = "/currencies" class="btn" style= "display:inline-block;" method = "post" name = "click" value = "Add Currency">
+      <i class="fa fa-check-circle"></i>
+    </button>
+    <input type="text" class="login-form" placeholder="New Currency Name" name="currency">
+  </form>
+  {% endif %}
+</div>
+
+{% if selcur != {} %} 
+<!-- This part displays the TRASH  <Currency Name> next to the "Currencies" text -->
+<div class = "Currency" style = "position: absolute; left: 250px; top: 50px">
+  {% if perms >= 3 %}
+  <form action = "/currencies" method = "post" style= "display:inline-block;">
+    <button action = "/currencies" class="btn" style= "display:inline-block;" method = "post" name = "click" value = "del-cur">
+      <i class="fa fa-trash"></i>
+    </button>
+  </form>
+  {% endif %}
+    <h2 style= "display:inline-block;">{{selcur['name']}}</h2>
+    {% if perms >= 2 %}
+        <form action="/currencies" method="post">
+          <input type="text" class="login-form" value="{{selcur['key']}}" placeholder="Key" name="key">
+          <p><input method = "post" class="btn btn-outline-primary" type="submit" name="click" value="Update Key"/>
+          </p>
+        </form>
+  {% endif %}
+  {% if perms <= 1 %}
+  <form action="/currencies" method="post">
+    <p><input method = "post" class="btn btn-outline-primary" type="submit" name="" value="Mod+"/>
+    </p>
+  </form>
+  {% endif %}
+  <h2>Trusted Members</h2>
+  <div>
+  <div class="scroll">
+  {% for m in members %}
+    <div>
+      <p style="display:inline-block;margin-right:10px;">{{m['name']}} {{m['rank']}}</p>
+      {% if perms >= 2 %}
+      {% if m != members[0] %}
+      <button class="btn" style= "display:inline-block; margin-right:2px;">
+        <i class="fa fa-pencil"></i>
+      </button> 
+    <form action = "/currencies" method = "post" style= "display:inline-block;">
+      <button action = "/currencies" class="btn" style= "display:inline-block;" method = "post" name = "click" value = "R{{m}}">
+        <i class="fa fa-trash"></i>
+      </button>
+    </form>
+    {% endif %}
+    {% endif %}
+    {% if m == members[0] %}
+      <i class = "fa fa-star-o" style = "display:inline-block; margin-left:12px; margin-right:2px"></i>
+    {% endif %}
+    </div>
+    {% endfor %}
+  </div>
+  </div>
+  <form action="/currencies" method="post">
+    <input type="text" class="login-form" placeholder="Add Player" name="player">
+    <button action = "/currencies" class="btn" style= "display:inline-block;" method = "post" name = "click" value = "Add Player">
+      <i class="fa fa-check-circle"></i>
+    </button>
+  </form>
+</div>
+{% endif %}
